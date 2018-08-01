@@ -93,9 +93,13 @@ T = 500*(10**-3)
 I1 = np.array([600*(10**-12)]*int(T/delta_t))
 I1 = I1.reshape(1,-1)
 I2 = np.array([500*(10**-12)]*int(T/delta_t))
-I2 = I1.reshape(1,-1)
+I2 = I2.reshape(1,-1)
 I3 = np.array([400*(10**-12)]*int(T/delta_t))
-I3 = I1.reshape(1,-1)
+I3 = I3.reshape(1,-1)
+
+print('I = {:.2f}pA'.format(I1[0,0]*(10**12)))
+print('I = {:.2f}pA'.format(I2[0,0]*(10**12)))
+print('I = {:.2f}pA'.format(I3[0,0]*(10**12)))
 
 V10 = b1/Kz1 + Et1
 U10 = b1*(b1/Kz1 + Et1 - Er1)
@@ -106,11 +110,46 @@ U20 = b2*(b2/Kz2 + Et2 - Er2)
 V30 = b3/Kz3 + Et3
 U30 = b3*(b3/Kz3 + Et3 - Er3)
 
-V, U = neuronRH.compute(V0, U0, I1, delta_t)
-plt.plot(V)
-plt.show()
-plt.plot(U)
-plt.show()
+def simulate_neuron(type):
+    if type == 'RH':
+        V0, U0 = V10, U10
+        neuron1 = neuronRH1
+        neuron2 = neuronRH2
+        neuron3 = neuronRH3
+    elif type == 'IB':
+        V0, U0 = V20, U20
+        neuron1 = neuronIB1
+        neuron2 = neuronIB2
+        neuron3 = neuronIB3
+    elif type == 'CH':
+        V0, U0 = V30, U30
+        neuron1 = neuronCH1
+        neuron2 = neuronCH2
+        neuron3 = neuronCH3
+    V_1, U_1 = neuron1.compute(V0, U0, I1, delta_t)
+    V_2, U_2 = neuron2.compute(V0, U0, I2, delta_t)
+    V_3, U_3 = neuron3.compute(V0, U0, I3, delta_t)
+
+    plt.figure(figsize=(15, 20))
+    plt.subplot(2,1,1)
+    plt.plot(V_1, 'r', label='I = {:.2f}pA'.format(I1[0,0]*(10**12)))
+    plt.plot(V_2, 'b', label='I = {:.2f}pA'.format(I2[0,0]*(10**12)))
+    plt.plot(V_3, 'g', label='I = {:.2f}pA'.format(I3[0,0]*(10**12)))
+    plt.ylabel('membrane potential')
+    plt.xlabel('time')
+    plt.legend()
+
+    plt.subplot(2,1,2)
+    plt.plot(U_1, 'r', label='I = {:.2f}pA'.format(I1[0,0]*(10**12)))
+    plt.plot(U_2, 'b', label='I = {:.2f}pA'.format(I2[0,0]*(10**12)))
+    plt.plot(U_3, 'g', label='I = {:.2f}pA'.format(I3[0,0]*(10**12)))
+    plt.ylabel('U(t)')
+    plt.xlabel('time')
+    plt.legend()
+
+    plt.show()
+
+simulate_neuron('IB')
 
 
 
