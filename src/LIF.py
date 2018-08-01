@@ -25,18 +25,16 @@ class LIF():
         return V
         
     def update_fn(self, Vi, Ii):
-        # print('Vi , Ii', Vi, Ii)
         if self.fireflag == True:
             self.fireflag = False
             return self.El
         else:
-            Vi_1 = Vi + ((-1*self.gL*Vi/self.C) + self.gL*self.El/self.C + Ii/self.C)*(self.delta_t - (self.gL*self.delta_t**2)/(2*self.C))
-            # print(Vi_1)
-            if Vi_1 >= self.V_thresh: #fire
+            V_i1 = Vi + ((-1*self.gL*Vi/self.C) + self.gL*self.El/self.C + Ii/self.C)*(self.delta_t - (self.gL*self.delta_t**2)/(2*self.C))
+            if V_i1 >= self.V_thresh: #fire
                 print('firing!!')
-                Vi_1 = 10*self.V_thresh
+                V_i1 = 10*self.V_thresh
                 self.fireflag = True
-            return Vi_1
+            return V_i1
 
 C=300*(10**-12)
 gL=30*(10**-9)
