@@ -1,8 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-e = 2.713
-
 class AEF():
     def __init__(self, C, gl, El, Vt, Delt, a, tw, b, Vr, num_neurons=1):
         self.C = C
@@ -20,8 +18,8 @@ class AEF():
     def compute(self, V0, U0, I, delta_t):
         '''
             I : array having current values at all the time [num_neurons X n_t]
-            V0 : initial memberane potential [num_neurons, ]
-            U0 : initial U [num_neurons, ]
+            V0 : initial memberane potential [num_neurons, 1]
+            U0 : initial U [num_neurons, 1]
         '''
         self.delta_t = delta_t
         n_t = I.shape[1]
@@ -40,7 +38,7 @@ class AEF():
         return V, U
     
     def update_fn(self, Vi, Ui, Ii):
-        V_i1 = Vi + self.delta_t*( (1/self.C)*( -self.gl*(Vi - self.El) + self.gl*self.Delt*(e**((Vi - self.Vt)/self.Delt)) - Ui + Ii ) )
+        V_i1 = Vi + self.delta_t*( (1/self.C)*( -self.gl*(Vi - self.El) + self.gl*self.Delt*(np.exp((Vi - self.Vt)/self.Delt)) - Ui + Ii ) )
         U_i1 = Ui + self.delta_t*( (1/self.tw)*( self.a*(Vi - self.El) - Ui))
 
         for idx, f in enumerate(self.fireflag):
@@ -92,6 +90,114 @@ tw3 = 120*(10**-3)
 b3 = 100*(10**-12)
 Vr3 = -46*(10**-3)
 
+'''
+# to find the initial values for steady state
+import numpy as np
+from scipy.optimize import newton_krylov
+
+def get_val(x, Vi):
+    if x == 'RS':
+        gl = gl1
+        Delt = Delt1
+        Vt = Vt1
+        a = a1
+        El = El1
+    elif x == 'IB':
+        gl = gl2
+        Delt = Delt2
+        Vt = Vt2
+        a = a2
+        El = El2
+    elif x == 'CH':
+        gl = gl3
+        Delt = Delt3
+        Vt = Vt3
+        a = a3
+        El = El3
+    
+    val = (gl*Delt*np.exp((Vi-Vt)/(Delt))) - (Vi-El)*(gl+a)
+    return val
+
+def get_U(x, Vi):
+    if x == 'RS':
+        gl = gl1
+        Delt = Delt1
+        Vt = Vt1
+        a = a1
+        El = El1
+    elif x == 'IB':
+        gl = gl2
+        Delt = Delt2
+        Vt = Vt2
+        a = a2
+        El = El2
+    elif x == 'CH':
+        gl = gl3
+        Delt = Delt3
+        Vt = Vt3
+        a = a3
+        El = El3
+    uval = a*(Vi-El)
+    return uval
+
+
+def residual_RS(V):
+    r = get_val('RS', V)
+    return r
+def residual_IB(V):
+    r = get_val('IB', V)
+    return r
+def residual_CH(V):
+    r = get_val('CH', V)
+    return r
+
+print('-------- RS ----------')
+guess = np.array([-0.065])
+sol = newton_krylov(residual_RS, guess, f_tol=1e-8, x_tol=1e-9, method='lgmres', verbose=1)
+print('Residual: %g' % abs(residual_RS(sol)).max())
+print('solution V: {}'.format(sol))
+print('solution U: {}'.format(get_U('RS',sol)))
+
+print('-------- IB ----------')
+guess = np.array([-0.065])
+sol = newton_krylov(residual_IB, guess, f_tol=1e-8, x_tol=1e-9, method='lgmres', verbose=1)
+print('Residual: %g' % abs(residual_IB(sol)).max())
+print('solution V: {}'.format(sol))
+print('solution U: {}'.format(get_U('IB',sol)))
+
+print('-------- CH ----------')
+guess = np.array([-0.065])
+sol = newton_krylov(residual_CH, guess, f_tol=1e-8, x_tol=1e-9, method='lgmres', verbose=1)
+print('Residual: %g' % abs(residual_CH(sol)).max())
+print('solution V: {}'.format(sol))
+print('solution U: {}'.format(get_U('CH',sol)))
+
+# ------------ output ---------- 
+# -------- RS ----------
+# 0:  |F(x)| = 1.75075e-14; step 1; tol 7.6656e-08
+# 1:  |F(x)| = 2.39061e-22; step 1; tol 1.67809e-16
+# 2:  |F(x)| = 7.15089e-26; step 1; tol 8.05273e-08
+# Residual: 7.15089e-26
+# solution V: [-0.06999992]
+# solution U: [1.51338825e-16]
+# -------- IB ----------
+# 0:  |F(x)| = 5.71067e-13; step 1; tol 1.23727e-05
+# 1:  |F(x)| = 5.76427e-17; step 1; tol 9.16973e-09
+# 2:  |F(x)| = 3.91204e-24; step 1; tol 4.14535e-15
+# 3:  |F(x)| = 3.43312e-27; step 1; tol 6.93129e-07
+# Residual: 3.43312e-27
+# solution V: [-0.05796957]
+# solution U: [1.217222e-13]
+# -------- CH ----------
+# 0:  |F(x)| = 3.17273e-13; step 1; tol 1.28362e-05
+# 1:  |F(x)| = 3.32277e-17; step 1; tol 9.87135e-09
+# 2:  |F(x)| = 2.29726e-24; step 1; tol 4.30194e-15
+# 3:  |F(x)| = 1.969e-27; step 1; tol 6.61166e-07
+# Residual: 1.969e-27
+# solution V: [-0.057969]
+# solution U: [6.2005901e-14]
+
+'''
 
 neuronRHs = AEF(C1, gl1, El1, Vt1, Delt1, a1, tw1, b1, Vr1, num_neurons=3)
 neuronIBs = AEF(C1, gl2, El2, Vt2, Delt2, a2, tw2, b2, Vr2, num_neurons=3)
@@ -106,26 +212,19 @@ I2 = I2.reshape(1,-1)
 I3 = np.array([450*(10**-12)]*int(T/delta_t))
 I3 = I3.reshape(1,-1)
 I = np.concatenate([I1, I2, I3], axis=0)
-print(I.shape)
-
+print('I shape : ', I.shape)
 print('I = {:.2f}pA'.format(I1[0,0]*(10**12)))
 print('I = {:.2f}pA'.format(I2[0,0]*(10**12)))
 print('I = {:.2f}pA'.format(I3[0,0]*(10**12)))
 
-V0 = np.linspace(-10000**-3, 10000**-3, 10000)
-y1 = (1 + a1/gl1)*(V0 - El1)/(gl1*Delt1)
-y2 = e**((V0 - Vt1)/Delt1)
-# Find intersection of y1, y2
+V10 = -0.06999992
+U10 = 1.51338825e-16
 
-# Steady state values of V and U for I app = 0
-V10 = []
-U10 = []
-#
-V20 = []
-U20 = []
-#
-V30 = []
-U30 = []
+V20 = -0.05796957
+U20 = 1.217222e-13
+
+V30 = -0.057969
+U30 = 6.2005901e-14
 
 def simulate_neuron(type):
     if type == 'RH':
@@ -161,6 +260,3 @@ def simulate_neuron(type):
 simulate_neuron('RH')
 simulate_neuron('IB')
 simulate_neuron('CH')
-
-
-
