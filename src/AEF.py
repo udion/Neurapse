@@ -51,9 +51,9 @@ class AEF():
         
         ## Please check
         for idx, v in enumerate(V_i1):
-            if v[0] >= self.Vr: #fire
+            if v[0] >= 0: #fire
                 print(idx, 'firing!!')
-                V_i1[idx] = 3*self.Vr
+                V_i1[idx] = 2e-3
                 self.fireflag[idx] = True
         
         return V_i1, U_i1
