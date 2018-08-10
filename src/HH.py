@@ -135,7 +135,14 @@ n0 = 0.31527801*np.ones((1,1))
 
 neuron = HH(C, E_Na, E_k, E_l, g_Na, g_k, g_l)
 V, h, m, n = neuron.compute(V0, h0, m0, n0, I, delta_t)
+i_Na = g_Na*(m**3)*h*(V-E_Na)
+i_k = g_k*(n**4)*(V-E_k)
+i_l = g_l*(V-E_l)
 
+P_Na = i_Na*(V-E_Na)
+P_k = i_k*(V-E_k)
+P_l = i_l*(V-E_l)
+P_cv = (-i_Na[:,1:] - i_k[:,1:] - i_l[:,1:] + I)*V[:,1:]
 
 plt.figure(figsize=(10,15))
 
@@ -156,6 +163,27 @@ plt.plot(list(range(n_t)), n[0,1:], 'b', label='n')
 plt.xlabel('time')
 plt.ylabel('parameter values')
 plt.legend()
+plt.show()
+
+plt.figure(figsize=(10,15))
+plt.plot(list(range(n_t)), i_Na[0,1:], 'orange', label='Na')
+plt.plot(list(range(n_t)), i_k[0,1:], 'y', label='k')
+plt.plot(list(range(n_t)), i_l[0,1:], 'b', label='l')
+plt.legend()
+plt.xlabel('time')
+plt.ylabel('current')
+plt.show()
+
+print(P_Na.shape)
+print(P_cv.shape)
+plt.figure(figsize=(10,15))
+plt.plot(list(range(n_t)), P_Na[0,1:], 'orange', label='Na')
+plt.plot(list(range(n_t)), P_k[0,1:], 'y', label='k')
+plt.plot(list(range(n_t)), P_l[0,1:], 'b', label='l')
+plt.plot(list(range(n_t)), P_cv[0,:], 'r', label='capacitor')
+plt.legend()
+plt.xlabel('time')
+plt.ylabel('power')
 plt.show()
 
 
