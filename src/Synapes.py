@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from SpikeTrains import POISSON_SPIKE_TRAIN
+from SpikeTrains import POISSON_SPIKE_TRAIN, RANDOM_SPIKE_TRAIN
 
 class CONST_SYNAPSE():
     '''

@@ -14,11 +14,14 @@ class RANDOM_SPIKE_TRAIN():
         self.generate()
     
     def generate(self):
+        '''
+        spike_instants = list of length n_out each value being arr(time_instants_of_spikes)
+        '''
         for i in range(self.n_out):
             spike_instants = random.sample(range(self.n_t+1), 10)
             self.V_train[i, spike_instants] = 1
         for i in range(self.n_out):
-            self.spike_instants[i] = np.where(self.V_train[i,:] == 1.0)
+            self.spike_instants[i] = np.where(self.V_train[i,:] == 1.0)[0]
 
 '''
 using RANDOM_SPIKE_TRAIN
@@ -49,6 +52,9 @@ class POISSON_SPIKE_TRAIN():
         self.generate()
     
     def generate(self):
+        '''
+        spike_instants = list of length n_out each value being arr(time_instants_of_spikes)
+        '''
         self.V_train = np.random.rand(self.n_out, self.n_t+1)
         self.V_train = self.V_train < self.lamb*self.delta_t
         for i in range(self.n_out):
