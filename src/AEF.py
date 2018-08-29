@@ -199,6 +199,9 @@ print('solution U: {}'.format(get_U('CH',sol)))
 
 '''
 
+'''
+simulation of different neurons
+
 neuronRHs = AEF(C1, gl1, El1, Vt1, Delt1, a1, tw1, b1, Vr1, num_neurons=3)
 neuronIBs = AEF(C1, gl2, El2, Vt2, Delt2, a2, tw2, b2, Vr2, num_neurons=3)
 neuronCHs = AEF(C1, gl3, El3, Vt3, Delt3, a3, tw3, b3, Vr3, num_neurons=3)
@@ -262,3 +265,4 @@ def simulate_neuron(type):
 simulate_neuron('RH')
 simulate_neuron('IB')
 simulate_neuron('CH')
+'''

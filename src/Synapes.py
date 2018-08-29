@@ -42,6 +42,9 @@ class CONST_SYNAPSE():
         s = np.sum(s)
         return s
 
+'''
+using SYNAPSE and SPIKETRAINS
+
 
 n_out = 1
 T = 500*(10**-3)
@@ -71,4 +74,5 @@ plt.plot(list(range(n_t+1)), I[0,:])
 plt.xlabel('time')
 plt.ylabel('I')
 plt.show()
+'''
 
