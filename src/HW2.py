@@ -104,17 +104,17 @@ tau_s = tau/4
 Sy_list = []
 I_Sy_list = []
 for i in range(n_out):
-    Sy = CONST_SYNAPSE(weights_w[i], I0, tau, tau_s)
-    Sy_list.append(Sy)
-    I = Sy.getI(V[i,:].reshape(1,-1), [SI[i]], delta_t)
-    I_Sy_list.append(I)
+   Sy = CONST_SYNAPSE(weights_w[i], I0, tau, tau_s)
+   Sy_list.append(Sy)
+   I = Sy.getI(V[i,:].reshape(1,-1), [SI[i]], delta_t)
+   I_Sy_list.append(I)
 
 print(len(Sy_list))
 print(len(I_Sy_list))
 
 I_total = 0
 for I_t in I_Sy_list:
-    I_total = I_t+I_total
+   I_total = I_t+I_total
 
 # simulating the response of the neuron with above current
 # simulating AEF RH neuron with the above synaptic current as input
@@ -134,35 +134,38 @@ V10 = -0.06999992
 U10 = 1.51338825e-16
 
 def simulate_neuron(type):
-    if type == 'RH':
-        V0, U0 = V10*np.ones(shape=(1,1)), U10*np.ones(shape=(1,1))
-        neurons = neuronRHs
-    elif type == 'IB':
-        V0, U0 = V20*np.ones(shape=(1,1)), U20*np.ones(shape=(1,1))
-        neurons = neuronIBs
-    elif type == 'CH':
-        V0, U0 = V30*np.ones(shape=(1,1)), U30*np.ones(shape=(1,1))
-        neurons = neuronCHs
-    V, U = neurons.compute(V0, U0, I_total, delta_t)
+   if type == 'RH':
+       V0, U0 = V10*np.ones(shape=(1,1)), U10*np.ones(shape=(1,1))
+       neurons = neuronRHs
+   elif type == 'IB':
+       V0, U0 = V20*np.ones(shape=(1,1)), U20*np.ones(shape=(1,1))
+       neurons = neuronIBs
+   elif type == 'CH':
+       V0, U0 = V30*np.ones(shape=(1,1)), U30*np.ones(shape=(1,1))
+       neurons = neuronCHs
+   V, U = neurons.compute(V0, U0, I_total, delta_t)
 
-    plt.figure(figsize=(15, 20))
+   plt.figure(figsize=(15, 20))
 
-    plt.subplot(3,1,1)
-    plt.plot(list(range(n_t+1)), I_total[0,:])
-    plt.xlabel('time')
-    plt.ylabel('I synaptic current')
+   plt.subplot(3,1,1)
+   plt.plot(list(range(n_t+1)), I_total[0,:])
+   plt.xlabel('time')
+   plt.ylabel('I synaptic current')
 
-    plt.subplot(3,1,2)
-    plt.plot(V[0,:], 'r')
-    plt.ylabel('membrane potential post synaptic neuron')
-    plt.xlabel('time')
-    plt.legend(loc=1)
+   plt.subplot(3,1,2)
+   plt.plot(V[0,:], 'r')
+   plt.ylabel('membrane potential post synaptic neuron')
+   plt.xlabel('time')
+   plt.legend(loc=1)
 
-    plt.subplot(3,1,3)
-    plt.plot(U[0,:], 'r',)
-    plt.ylabel('U(t) post synaptic neuron')
-    plt.xlabel('time')
-    plt.legend(loc=1)
-    plt.show()
+   plt.subplot(3,1,3)
+   plt.plot(U[0,:], 'r',)
+   plt.ylabel('U(t) post synaptic neuron')
+   plt.xlabel('time')
+   plt.legend(loc=1)
+   plt.show()
 
 simulate_neuron('RH')
+
+
+
