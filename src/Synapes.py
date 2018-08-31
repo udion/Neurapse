@@ -42,6 +42,21 @@ class CONST_SYNAPSE():
         s = np.sum(s)
         return s
 
+    # upd_coeff is {-1,1} according to increment/decrement rule
+    def weight_update(self, gamma, delta_tk, upd_coeff):
+        s1 = np.exp(- delta_tk/self.tau)
+        s2 = np.exp(- delta_tk/self.tau_s)
+        if upd_coeff == -1:
+            if self.w <= 10:
+                self.w = 10
+                print('weights fixed to 10')
+        elif upd_coeff == 1:
+            if self.w >= 500:
+                self.w = 500
+                print('weights fixed to 500')
+        self.w = self.w + upd_coeff*self.w*gamma*(s1 - s2)
+        
+
 '''
 using SYNAPSE and SPIKETRAINS
 
