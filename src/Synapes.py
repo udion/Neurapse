@@ -48,7 +48,7 @@ class CONST_SYNAPSE():
         s2 = np.exp(- delta_tk/self.tau_s)
         if upd_coeff == -1:
             if self.w <= 10:
-                self.w = 10
+                self.w = self.w - 1
                 print('weights fixed to 10')
         elif upd_coeff == 1:
             if self.w >= 500:

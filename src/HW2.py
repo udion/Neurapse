@@ -324,6 +324,3 @@ iterative_synapse_tune(V_pre, Sy_list, -1, 1, max_iter=15)
 
 
 
-
-
-
