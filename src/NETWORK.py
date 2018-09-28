@@ -57,9 +57,20 @@ class NNetwork():
                 if self.cell[i,j] != None:
                     Sy = self.cell[i,j][2]
                     I = Sy.getI(self.V_pre_response[i,:].reshape(1, -1), [SI[i]], self.delta_t)
-                    self.I_post_neuron_list[j] += I
+                    self.I_post_neuron_list[j] = self.I_post_neuron_list[j]+I
                     self.I_sy_list.append(I)
         self.I_post = np.array(self.I_post_neuron_list).reshape(self.num_post, -1)
+
+        # print(self.I_post[0,:])
+        # print(self.I_post[1,:])
+        # print('$$')
+        # print(t1)
+        # print(t2)
+        # print(self.I_sy_list[0][0,:]+self.I_sy_list[2][0,:]+self.I_sy_list[4][0,:])
+        # print(self.I_sy_list[1][0,:]+self.I_sy_list[3][0,:]+self.I_sy_list[5][0,:])
+        # print(self.I_sy_list[0][0,:]+self.I_sy_list[1][0,:]+self.I_sy_list[2][0,:]+self.I_sy_list[3][0,:]+self.I_sy_list[4][0,:]+self.I_sy_list[5][0,:])
+        # print('$$')
+        # print(self.I_post[0,:] - (self.I_sy_list[0][0,:]+self.I_sy_list[1][0,:]+self.I_sy_list[2][0,:]))
 
         V0_post = np.ones(shape=(self.num_post,1))
         V0_post = self.El*V0_post
@@ -100,27 +111,14 @@ class NNetwork():
         plt.show()
 
         # post neuron response
-        
-        # for i in range(self.num_post):
-        #     plt.figure(figsize=(25, 15))
-        #     plt.plot(self.V_post_response[0, :100], label='post-{}'.format(i))
-        #     plt.show()
-        # plt.legend()
-        # plt.xlabel('time')
-        # plt.ylabel('V')
-        # plt.title('response of the post neurons')
-        # plt.show()
-
-
-
-
-
-        # n_syn = len(self.I_sy_list)
-        # for i in range(n_syn):
-        #     plt.plot(self.I_sy_list[i][0,:])
-        # plt.show()
-
-
+        plt.figure(figsize=(25, 15))
+        for i in range(self.num_post):
+            plt.plot(self.V_post_response[i,:100], label='post-{}'.format(i))
+        plt.legend()
+        plt.xlabel('time')
+        plt.ylabel('V')
+        plt.title('response of the post neurons')
+        plt.show()
 
 Fanout = [
     [0,1],
