@@ -44,14 +44,17 @@ class NeuronalNetwork():
         self.delta_t = delta_t
         # inital V for LIF neuron is V0
         # [num_pre X n_t]
-        V0 = 
+        # V0 = 
         V_pre_response = self.all_pre_neurons.compute(V0, I, self.delta_t)
 
         # Need spike instants 
-        SI = 
+        # SI = 
 
         # Get currents from synapses for given V_pre_response from pre-neurons
         I = Sy.getI(V_pre_response, SI, self.delta_t)
+
+        # Feed these currents to the post_neurons
+        V = self.all_post_neurons.compute(V0, I, self.delta_t)
 
 
 
