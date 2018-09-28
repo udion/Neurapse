@@ -68,6 +68,7 @@ class DRN():
         # Creating poisson spike trains as inputs for first 25 neurons
         # Note: Originally this was meant for poisson potential spikes, 
         # here using as current
+        self.T = T
         n_t = int(T/delta_t)
         ST = POISSON_SPIKE_TRAIN(T=T, delta_t=delta_t, lamb=100, n_out=n_out)
         I_poi_spikes = ST.V_train
@@ -80,25 +81,48 @@ class DRN():
         (self.V_pre_response, self.V_post_response, 
         self.I_sy_list, self.I_post) = DRN.compute(I, self.delta_t)
 
-        self.exci_raster = get_spike_instants_from_neuron(
+        self.exci_spike_instants = get_spike_instants_from_neuron(
             self.V_post_response[self.exci_neuron_id,:],
             self.V_thresh
         )
 
-        self.inhi_raster = get_spike_instants_from_neuron(
+        self.inhi_spike_instants = get_spike_instants_from_neuron(
             self.V_post_response[self.inhi_neuron_id,:],
             self.V_thresh
         )
 
+        self.display()
+
+    def display(self):
+        # showing rastor plots 
         colorCodes = np.array(
             [[0,0,0]]*self.N_exci
             +
             [[0,0,1]]*self.N_inhi
         )
+        plt.eventplot(self.exci_spike_instants + self.inhi_spike_instants, color=colorCodes, lineoffsets=2)
+        plt.show()
 
-        print(colorCodes, colorCodes.shape)
+        # Ret and Rit
+        Ret = []
+        Rit = []
+        for l in self.exci_spike_instants:
+            Ret = Ret+list(l)
+        for l in self.inhi_spike_instants:
+            Rit = Rit+list(l)
+        Ret_sorted = sorted(Ret)
+        Rit_sorted = sorted(Rit)
+        t0 = 10e-3
+        plt.figure(figsize=(25, 25))
+        plt.subplot(2,1,1)
+        plt.hist(Ret_sorted, bins=int(self.T/t0))
+        plt.xlabel('time')
+        plt.ylabel('freq Ret')
 
-        plt.eventplot(self.exci_raster + self.inhi_raster, color=colorCodes, lineoffsets=2)
+        plt.subplot(2,1,2)
+        plt.hist(Rit_sorted, bins=int(self.T/t0))
+        plt.xlabel('time')
+        plt.ylabel('freq Rit')
         plt.show()
 
         
