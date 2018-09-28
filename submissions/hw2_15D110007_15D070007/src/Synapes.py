@@ -4,15 +4,14 @@ from SpikeTrains import POISSON_SPIKE_TRAIN, RANDOM_SPIKE_TRAIN
 
 class CONST_SYNAPSE():
     '''
-    This synapse can be represented
+    This synapsecan be represented
     by a single non changing weight
     '''
-    def __init__(self, w, I0, tau, tau_s, tau_d):
+    def __init__(self, w, I0, tau, tau_s):
         self.w = w
         self.I0 = I0
         self.tau = tau
         self.tau_s = tau_s
-        self.tau_d = tau_d
     
     def getI(self, V_train, spike_instants, delta_t):
         '''
@@ -23,13 +22,12 @@ class CONST_SYNAPSE():
         '''
         n_t = V_train.shape[1]
         self.It = np.zeros(shape=(1,n_t))
-        spike_instants_delayed = [si+self.tau_d for si in spike_instants]
         # print(spike_instants)
         # return
         for t in range(n_t):
-            contribution = np.array(spike_instants_delayed[0])<t
+            contribution = np.array(spike_instants[0])<t
             contribution_i = np.where(contribution == 1)[0]
-            t_calc = np.array(spike_instants_delayed[0][contribution_i])
+            t_calc = np.array(spike_instants[0][contribution_i])
             if t_calc != np.array([]):
                 s = self.f(t*delta_t, t_calc*delta_t)
                 self.It[0, t] = self.I0*self.w*s
