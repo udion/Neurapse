@@ -241,7 +241,7 @@ def iterative_synapse_tune(V_pre, Sy_list, upd_coeff, gamma, max_iter=500):
     itr = 0
     while itr<max_iter:
         print('doing iteration {} ...'.format(itr))
-        I_Sy_list = []
+        I_Sy_list = []0
         for i in range(n_out):
             I = Sy_list[i].getI(V_pre[i,:].reshape(1,-1), [SI[i]], delta_t)
             I_Sy_list.append(I)
