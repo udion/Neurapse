@@ -75,7 +75,9 @@ class NNetwork():
         V0_post = np.ones(shape=(self.num_post,1))
         V0_post = self.El*V0_post
         self.V_post_response = self.all_post_neurons.compute(V0_post, self.I_post, self.delta_t)
-        self.display()
+        # self.display()
+
+        return self.V_pre_response, self.V_post_response, self.I_sy_list, self.I_post
     
     def display(self):
         # pre neuron response
@@ -120,6 +122,9 @@ class NNetwork():
         plt.title('response of the post neurons')
         plt.show()
 
+'''
+usage: 
+
 Fanout = [
     [0,1],
     [0,1],
@@ -147,3 +152,4 @@ I_pre = np.array([
 print(I_pre.shape)
 A.compute(I_pre, 1e-4)
 # A.display()
+'''

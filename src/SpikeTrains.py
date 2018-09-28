@@ -61,9 +61,6 @@ class POISSON_SPIKE_TRAIN():
             self.spike_instants[i] = np.where(self.V_train[i,:] == 1.0)[0]
         # print(self.spike_instants)
 
-<<<<<<< HEAD
-# def get_spike_instants_from_neuron(V, )
-=======
 def get_spike_instants_from_neuron(V, V_thresh):
     '''
     V : num_neurons X n_t
@@ -75,7 +72,6 @@ def get_spike_instants_from_neuron(V, V_thresh):
     return spike_instants
 
 
->>>>>>> b7b9c243e04ddd52fd50e6c9adee4a957b42daec
 
 '''
 using POISSON_SPIKE_TRAIN

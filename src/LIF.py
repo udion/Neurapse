@@ -53,7 +53,7 @@ class LIF():
         
         for idx, v in enumerate(V_i1):
             if v[0] >= self.V_thresh: #fire
-                print(idx, 'firing!!')
+                # print(idx, 'firing!!')
                 V_i1[idx] = 10*self.V_thresh
                 self.fireflag[idx] = True
         
