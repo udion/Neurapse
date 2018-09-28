@@ -12,6 +12,8 @@ class NeuronalNetwork():
         self.Fanout = Fanout
         self.W = W
         self.Tau = Tau
+        self.num_pre = num_pre
+        self.num_post = num_post
         self.cell = np.array([[None]*num_post]*num_pre)
 
         # Define neurons
@@ -34,6 +36,26 @@ class NeuronalNetwork():
                 Sy = CONST_SYNAPSE(w, I0, tau, tau_s, tau_d)
                 self.cell[idx, nid] = (w, tau_d, Sy)
         print(self.cell)
+
+    def compute(self, I_pre, delta_t):
+        '''
+        I_pre : 2d numpy array containing input for pre neurons [num_pre X n_t]
+        '''
+        self.delta_t = delta_t
+        # inital V for LIF neuron is V0
+        # [num_pre X n_t]
+        V0 = 
+        V_pre_response = self.all_pre_neurons.compute(V0, I, self.delta_t)
+
+        # Need spike instants 
+        SI = 
+
+        # Get currents from synapses for given V_pre_response from pre-neurons
+        I = Sy.getI(V_pre_response, SI, self.delta_t)
+
+
+
+
 
 
 Fanout = [
