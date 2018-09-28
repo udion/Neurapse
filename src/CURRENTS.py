@@ -15,8 +15,8 @@ class SQUARE_PULSE():
             self.current[0, t] = 1
         return self.current
 
-SQ = SQUARE_PULSE(10, 50, 200).generate()
-plt.plot(SQ[0,:])
-plt.show()
+# SQ = SQUARE_PULSE(10, 50, 200).generate()
+# plt.plot(SQ[0,:])
+# plt.show()
 
 
