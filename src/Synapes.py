@@ -5,7 +5,49 @@ from SpikeTrains import POISSON_SPIKE_TRAIN, RANDOM_SPIKE_TRAIN
 class CONST_SYNAPSE():
     '''
     This synapse can be represented
-    by a single non changing weight
+    by a single const weight (non plastic)
+    '''
+    def __init__(self, w, I0, tau, tau_s, tau_d):
+        self.w = w
+        self.I0 = I0
+        self.tau = tau
+        self.tau_s = tau_s
+        self.tau_d = tau_d
+    
+    def getI(self, V_train, spike_instants, delta_t):
+        '''
+        V_train : 1 X n_t
+        spike_instants : list(arr(num_of_spikes))
+        
+        returns It = 1 X n_t
+        '''
+        n_t = V_train.shape[1]
+        self.It = np.zeros(shape=(1,n_t))
+        spike_instants_delayed = [si+self.tau_d for si in spike_instants]
+        # print(spike_instants)
+        # return
+        for t in range(n_t):
+            contribution = np.array(spike_instants_delayed[0])<t
+            contribution_i = np.where(contribution == 1)[0]
+            t_calc = np.array(spike_instants_delayed[0][contribution_i])
+            if t_calc != np.array([]):
+                s = self.f(t*delta_t, t_calc*delta_t)
+                self.It[0, t] = self.I0*self.w*s
+            else:
+                self.It[0, t] = 0
+        return self.It
+    
+    def f(self, t, t_calc):
+        s1 = np.exp(-(t - t_calc)/self.tau)
+        s2 = np.exp(-(t - t_calc)/self.tau_s)
+        s = s1-s2
+        s = np.sum(s)
+        return s
+
+class PLASTIC_SYNAPSE_A():
+    '''
+    This synapse can be represented
+    by a single weight, update rule as given in update function
     '''
     def __init__(self, w, I0, tau, tau_s, tau_d):
         self.w = w
@@ -67,8 +109,65 @@ class CONST_SYNAPSE():
             else:
                 self.w = self.w + upd_coeff*self.w*gamma*(s1 - s2)
                 return upd_coeff*self.w*gamma*(s1 - s2)
+
+
+class PLASTIC_SYNAPSE_B():
+    '''
+    This synapse will use updates
+    considering the delayed time effect
+    '''
+    def __init__(self, w, I0, tau, tau_s, tau_d, tau_l, A_up, A_dn):
+        self.w = w
+        self.I0 = I0
+        self.tau = tau
+        self.tau_s = tau_s
+        self.tau_d = tau_d
+        # for weight updates 
+        self.tau_l = tau_l
+        self.A_up = A_up
+        self.A_dn = A_dn
+    
+    def getI(self, V_train, spike_instants, delta_t):
+        '''
+        V_train : 1 X n_t
+        spike_instants : list(arr(num_of_spikes))
         
-        
+        returns It = 1 X n_t
+        '''
+        n_t = V_train.shape[1]
+        self.It = np.zeros(shape=(1,n_t))
+        spike_instants_delayed = [si+self.tau_d for si in spike_instants]
+        # print(spike_instants)
+        # return
+        for t in range(n_t):
+            contribution = np.array(spike_instants_delayed[0])<t
+            contribution_i = np.where(contribution == 1)[0]
+            t_calc = np.array(spike_instants_delayed[0][contribution_i])
+            if t_calc != np.array([]):
+                s = self.f(t*delta_t, t_calc*delta_t)
+                self.It[0, t] = self.I0*self.w*s
+            else:
+                self.It[0, t] = 0
+        return self.It
+    
+    def f(self, t, t_calc):
+        s1 = np.exp(-(t - t_calc)/self.tau)
+        s2 = np.exp(-(t - t_calc)/self.tau_s)
+        s = s1-s2
+        s = np.sum(s)
+        return s
+
+    # upd_coeff represents upstream or downstream
+    def weight_update(self, delta_tk, upd_coeff):
+        '''
+        update the weight and will return the delta by which it updated
+        '''
+        s1 = np.exp(- delta_tk/self.tau_l)
+        if upd_coeff==1:
+            # upstream
+            self.w = self.w + self.w*(self.A_up*s1)
+        elif upd_coeff == -1:
+            self.w = self.w + self.w*(self.A_dn*s1)
 
 '''
 using SYNAPSE and SPIKETRAINS
