@@ -74,14 +74,14 @@ def get_spike_instants_from_neuron(V, V_thresh):
 
 
 '''
-using POISSON_SPIKE_TRAIN
+#using POISSON_SPIKE_TRAIN
 
 n_out = 10
 T = 500*(10**-3)
 delta_t = 0.01*(10**-3)
 n_t = int(T/delta_t)
 
-ST = POISSON_SPIKE_TRAIN(T=T, delta_t=delta_t, lamb=10, n_out=n_out)
+ST = POISSON_SPIKE_TRAIN(T=T, delta_t=delta_t, lamb=100, n_out=n_out)
 V = ST.V_train
 
 plt.figure()

@@ -5,7 +5,7 @@ from SpikeTrains import POISSON_SPIKE_TRAIN, RANDOM_SPIKE_TRAIN
 class CONST_SYNAPSE():
     '''
     This synapse can be represented
-    by a single const weight (non plastic)
+    by a single non changing weight
     '''
     def __init__(self, w, I0, tau, tau_s, tau_d):
         self.w = w
@@ -23,14 +23,14 @@ class CONST_SYNAPSE():
         '''
         n_t = V_train.shape[1]
         self.It = np.zeros(shape=(1,n_t))
-        spike_instants_delayed = [si+self.tau_d for si in spike_instants]
-        # print(spike_instants)
+        spike_instants_delayed = [si+int(self.tau_d//delta_t) for si in spike_instants]
+        # print(spike_instants_delayed)
         # return
         for t in range(n_t):
             contribution = np.array(spike_instants_delayed[0])<t
             contribution_i = np.where(contribution == 1)[0]
             t_calc = np.array(spike_instants_delayed[0][contribution_i])
-            if t_calc != np.array([]):
+            if t_calc.size != 0:
                 s = self.f(t*delta_t, t_calc*delta_t)
                 self.It[0, t] = self.I0*self.w*s
             else:
@@ -65,14 +65,14 @@ class PLASTIC_SYNAPSE_A():
         '''
         n_t = V_train.shape[1]
         self.It = np.zeros(shape=(1,n_t))
-        spike_instants_delayed = [si+self.tau_d for si in spike_instants]
-        # print(spike_instants)
+        spike_instants_delayed = [si+int(self.tau_d//delta_t) for si in spike_instants]
+        # print(spike_instants_delayed)
         # return
         for t in range(n_t):
             contribution = np.array(spike_instants_delayed[0])<t
             contribution_i = np.where(contribution == 1)[0]
             t_calc = np.array(spike_instants_delayed[0][contribution_i])
-            if t_calc != np.array([]):
+            if t_calc.size != 0:
                 s = self.f(t*delta_t, t_calc*delta_t)
                 self.It[0, t] = self.I0*self.w*s
             else:
@@ -136,14 +136,14 @@ class PLASTIC_SYNAPSE_B():
         '''
         n_t = V_train.shape[1]
         self.It = np.zeros(shape=(1,n_t))
-        spike_instants_delayed = [si+self.tau_d for si in spike_instants]
-        # print(spike_instants)
+        spike_instants_delayed = [si+int(self.tau_d//delta_t) for si in spike_instants]
+        # print(spike_instants_delayed)
         # return
         for t in range(n_t):
             contribution = np.array(spike_instants_delayed[0])<t
             contribution_i = np.where(contribution == 1)[0]
             t_calc = np.array(spike_instants_delayed[0][contribution_i])
-            if t_calc != np.array([]):
+            if t_calc.size != 0:
                 s = self.f(t*delta_t, t_calc*delta_t)
                 self.It[0, t] = self.I0*self.w*s
             else:
@@ -162,12 +162,16 @@ class PLASTIC_SYNAPSE_B():
         '''
         update the weight and will return the delta by which it updated
         '''
+        # print('old w: ', self.w)
         s1 = np.exp(- delta_tk/self.tau_l)
+        # print('s1: ', s1)
         if upd_coeff==1:
             # upstream
             self.w = self.w + self.w*(self.A_up*s1)
         elif upd_coeff == -1:
             self.w = self.w + self.w*(self.A_dn*s1)
+        # print('new w: ', self.w)
+        return self.w
 
 '''
 using SYNAPSE and SPIKETRAINS

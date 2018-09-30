@@ -12,6 +12,12 @@ class LIF():
         self.num_neurons = num_neurons
         self.fireflag = [False]*num_neurons
         self.refract = [None]*num_neurons
+        self.I_synt = np.zeros(shape=(num_neurons,1))
+        self.ins_t = 0
+    
+    def inject(self, t, I_synt):
+        self.ins_t = t
+        self.I_synt = I_synt
     
     def compute(self, V0, I, delta_t):
         '''
@@ -28,12 +34,14 @@ class LIF():
         print(Vi.shape)
         V.append(Vi)
         for i in range(self.n_t):
-            Vi = self.update_fn(Vi, I[:,i].reshape(self.num_neurons, 1))
+            Vi = self.update_fn(Vi, I[:,i].reshape(self.num_neurons, 1)+self.I_synt, self.delta_t)
             V.append(Vi)
         V = np.concatenate(V, axis=1)
         return V
         
-    def update_fn(self, Vi, Ii):
+    def update_fn(self, Vi, Ii, delta_t):
+        self.delta_t = delta_t
+        self.n_Rp = int(self.Rp/self.delta_t)
         V_i1 = Vi + ((-1*self.gL*Vi/self.C) + self.gL*self.El/self.C + Ii/self.C)*(self.delta_t - (self.gL*self.delta_t**2)/(2*self.C))
 
         for idx, f in enumerate(self.fireflag):
