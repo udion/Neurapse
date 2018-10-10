@@ -18,6 +18,14 @@ clone or fork this repository by `git clone https://github.com/udion/Neurapse`. 
 Some examples are given with the comments in `examples*.py`. 
 
 ### Importing a neuron
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+import Neurapse.Neurons as HH #importing Hodgkin-Huxley neuron
+import Neurapse.utils.CURRENTS as Cur #to generate currents (Square pulse in this example)
+```
+
 
 
 
