@@ -1,4 +1,4 @@
-<p align="center"><img width="65%" src="./Neurapse.png"/></p>
+<p align="center"><img width="65%" src="media/Neurapse.png"/></p>
 
 ## 3rd Gen Neural Networks
 Current Deep Learning methods (2nd Gen) set very impressive state of the art results, although the building blocks such as *convolutions etc* are biologically inspired ***they still are not as efficient as computations happening at many biological neural networks***
@@ -67,7 +67,7 @@ plt.xlabel('time')
 plt.ylabel('applied current')
 plt.show() #graph shown below
 ```
-![](./neurapse_sqpulse.png)
+![](media/neurapse_sqpulse.png)
 
 Let's pass this current to the `Neuron (hodgkin-huxley defined above)`. *Neurons have a `.compute()` function which will give the response of the neuron, given intial condition and input current*
 
@@ -90,13 +90,13 @@ i_k = g_k*(n**4)*(V-E_k)
 i_l = g_l*(V-E_l)
 ```
 We can visualise the responses, say `V, i_Na (Sodium channel current), i_k(potassium channel current), leaky current`
-![](./neurapse_HHresponse.png)
+![](media/neurapse_HHresponse.png)
 
 We can similarly use other neurons (*HH models the ion channel currents very well, but is expensive in computation due to coupled differential equations of channel currents*). **Adaptive Exponential Integrate and Fire (AEF)** neuron is one such model which is not as complex as **HH** but by tweaking the parameters one can get different behaviour of the neurons. `exampleAEF.py` shows how to use AEF neuron, some responses are
 
-![](./AEF_IB.png) 
-![](./AEF_CH.png)
-![](./AEF_RH.png)
+![](media/AEF_IB.png) 
+![](media/AEF_CH.png)
+![](media/AEF_RH.png)
 
 ## Importing a Network
 
@@ -136,7 +136,7 @@ plt.ylabel('V')
 plt.title('response of the post neurons')
 ```
 This shows that for the given configuration, post-synaptic neuron 1 spikes and other does not spike, hence this configuration is suitable for identifying the given input pattern
-![](./Neurapse_fullN1.png)
+![](media/Neurapse_fullN1.png)
 
 
 
@@ -145,14 +145,14 @@ This shows that for the given configuration, post-synaptic neuron 1 spikes and o
 ***
 ### Dynamical Random network with plastic synapses (STDP)
 
-There are two classes, namely `DRN_Const` and `DRN_Plastic` for building a random network of neurons having *constant weight* synapses and *plastic* synapses respectively. As for the previous case, the fanout, initial weights and synaptic time delays have to be specified. Here, first `N_exci`  neurons from a list [0, 1, 2, ..., N-1] (indices of neurons) are excitatory neurons and the remaining `N_inhi` are inhibitory neurons. The excitatory neurons can connect to any other neuron in the pool, while the inhibitory neurons synapse only to other excitatory neurons. Each neuron communicates
-to a  `connect_frac * N`  of unique neurons in the network. As an example, a random network with *N = 20* neurons and *N_exci = 16, N_inhi = 4* is shown below. Note, the red edges show inhibitory synapses and blue ones show excitatory synapses.
+There are two classes, namely `DRN_Const` and `DRN_Plastic` for building a random network of neurons having *constant weight* synapses and *plastic* synapses respectively. As for the previous case, the fanout, initial weights and synaptic time delays have to be specified. Here, first `N_exci` neurons from a list [0, 1, 2, ..., N-1] (indices of neurons) are excitatory neurons and the remaining `N_inhi` are inhibitory neurons. The excitatory neurons can connect to any other neuron in the pool, while the inhibitory neurons synapse only to other excitatory neurons. Each neuron communicates
+to a  `connect_frac * N`  of unique neurons in the network. As an example, a random network with 20 neurons is shown below. Note, the red edges show inhibitory synapses and blue ones show excitatory synapses.
 
-![](./neural_network.png) 
+![](media/neural_network.png) 
 
 The raster plot for a dynamic random network (*N = 500, T = 2000 ms*) changing the synaptic weights adaptively according to modified STDP rule is shown below.
 
-![](./drn_plastic_raster.png) 
+![](media/drn_plastic_raster.png) 
 
 
 
