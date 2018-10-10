@@ -1,4 +1,4 @@
-# ![Neurapse](./Neurapse.png)
+<p align="center"><img width="45%" src="./Neurapse.png"/></p>
 
 ## 3rd Gen Neural Networks
 Current Deep Learning methods (2nd Gen) set very impressive state of the art results, although the building blocks such as *convolutions etc* are biologically inspired ***they still are not as efficient as computations happening at many biological neural networks***
