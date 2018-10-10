@@ -22,7 +22,7 @@ Some examples are given with the comments in `examples*.py`.
 import numpy as np
 import matplotlib.pyplot as plt
 
-import Neurapse.Neurons as HH #importing Hodgkin-Huxley neuron
+import Neurapse.Neurons as Neu #importing Hodgkin-Huxley neuron
 import Neurapse.utils.CURRENTS as Cur #to generate currents (Square pulse in this example)
 ```
 
@@ -39,6 +39,8 @@ g_k = 36e-3
 g_l = 0.3e-3
 I0 = 15e-6
 
+Neuron = Neu.HH(C, E_Na, E_k, E_l, g_Na, g_k, g_l)
+
 T = 30e-3 # Time in seconds
 delta_t = 1e-5 # quanta in which time updates in seconds
 n_t = int(5*T//delta_t)+1 # Total time of simulation is 5*T, hence number of time-steps is n_t
@@ -51,8 +53,12 @@ I = I0*I # I is input current to the neuron in micro-Ampere
 
 plt.plot(I)
 plt.xlabel('time')
-plt.ylabel('current')
+plt.ylabel('applied current')
+plt.show() #graph shown below
 ```
+![](./neurapse_sqpulse.png)
+
+Let's pass this current to the `Neuron (hodgkin-huxley defined above)`. *Neurons have a `.compute()` function which will give the response of the neuron, given intial condition and input current*
 
 
 
