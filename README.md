@@ -1,4 +1,4 @@
-<p align="center"><img width="45%" src="./Neurapse.png"/></p>
+<p align="center"><img width="65%" src="./Neurapse.png"/></p>
 
 ## 3rd Gen Neural Networks
 Current Deep Learning methods (2nd Gen) set very impressive state of the art results, although the building blocks such as *convolutions etc* are biologically inspired ***they still are not as efficient as computations happening at many biological neural networks***
@@ -6,18 +6,22 @@ Current Deep Learning methods (2nd Gen) set very impressive state of the art res
 Spiking Neural Networks (SNNs) is an attempt to simulate biological networks closely. Broadly the framework consists of **Spikes**, **Neurons**, **Synapses**, **Networks**.
 **Neurapse** is a package in python which implements some of the fundamental blocks of SNN and is written in a manner so that it can easily be extended and customized.
 
-* Neurons : Hodgkin Huxley (HH), Adaptive Exponential Fire (AEF) , Leaky integrate and Fire (LIF), IZHIKEVICH
+## Supports
+- `Neurons` : Hodgkin Huxley (HH), Adaptive Exponential Integrate and Fire (AEF) , Leaky integrate and Fire (LIF), IZHIKEVICH
+- `Synapses`: Constant Synapse (No STDP), Plastic Synapses (2 kinds of STDP)
+- `Networks`: Feed Forward using LIF, Dynamic Random Networks
 
-* Synapses: Constant Synapse (No STDP), Plastic Synapses (2 kinds of STDP)
-
-* Networks: Feed Forward using LIF, Dynamic Random Networks
+## Requirements
+- Python 3.6+
+- `numpy`
+- `matplotlib`
 
 ## How to use?
 clone or fork this repository by `git clone https://github.com/udion/Neurapse`. Make sure you have the dependencies given in the `requirements.txt` (*So far it only requires numpy, matplotlib*)
 
 Some examples are given with the comments in `examples*.py`. 
 
-### Importing a neuron
+## Importing a neuron ([or jump to Network example](#importing-a-network))
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
@@ -86,6 +90,8 @@ We can similarly use other neurons (*HH models the ion channel currents very wel
 ![](./AEF_IB.png) 
 ![](./AEF_CH.png)
 ![](./AEF_RH.png)
+
+## Importing a Network
 
 
 
