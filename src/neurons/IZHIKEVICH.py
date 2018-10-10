@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
 
 class IZHIKEVICH():
     def __init__(self, C, Kz, Er, Et, a, b, c, d, V_thresh, num_neurons=1):
@@ -56,6 +55,9 @@ class IZHIKEVICH():
                 self.fireflag[idx] = True
         
         return V_i1, U_i1
+
+'''
+import matplotlib.pyplot as plt
 
 ######## RS model ############
 C1 = 100*(10**-12)
@@ -153,6 +155,7 @@ def simulate_neuron(type):
 simulate_neuron('RH')
 simulate_neuron('IB')
 simulate_neuron('CH')
+'''
 
 
 

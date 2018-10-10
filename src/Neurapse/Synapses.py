@@ -1,6 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
-from SpikeTrains import POISSON_SPIKE_TRAIN, RANDOM_SPIKE_TRAIN
 
 class CONST_SYNAPSE():
     '''
@@ -174,8 +172,10 @@ class PLASTIC_SYNAPSE_B():
         return self.w
 
 '''
-using SYNAPSE and SPIKETRAINS
+using SYNAPSE and SPIKETRAINS:
 
+import matplotlib.pyplot as plt
+from SpikeTrains import POISSON_SPIKE_TRAIN, RANDOM_SPIKE_TRAIN
 
 n_out = 1
 T = 500*(10**-3)

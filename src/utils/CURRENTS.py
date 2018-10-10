@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
 import random
 
 class SQUARE_PULSE():
@@ -14,9 +13,11 @@ class SQUARE_PULSE():
         for t in range(self.t_start, self.t_end+1):
             self.current[0, t] = 1
         return self.current
-
-# SQ = SQUARE_PULSE(10, 50, 200).generate()
-# plt.plot(SQ[0,:])
-# plt.show()
+'''
+import matplotlib.pyplot as plt
+SQ = SQUARE_PULSE(10, 50, 200).generate()
+plt.plot(SQ[0,:])
+plt.show()
+'''
 
 

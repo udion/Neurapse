@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
 import random
 
 class RANDOM_SPIKE_TRAIN():
@@ -24,7 +23,9 @@ class RANDOM_SPIKE_TRAIN():
             self.spike_instants[i] = np.where(self.V_train[i,:] == 1.0)[0]
 
 '''
-using RANDOM_SPIKE_TRAIN
+usage RANDOM_SPIKE_TRAIN:
+
+import matplotlib.pyplot as plt
 
 ST = RANDOM_SPIKE_TRAIN(T=500*(10**-3), delta_t=0.1*(10**-3), lamb=10).V_train
 V = ST.V_train
@@ -75,6 +76,8 @@ def get_spike_instants_from_neuron(V, V_thresh):
 
 '''
 #using POISSON_SPIKE_TRAIN
+
+import matplotlib.pyplot as plt
 
 n_out = 10
 T = 500*(10**-3)

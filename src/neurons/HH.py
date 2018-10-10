@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
 
 class HH():
     def __init__(self, C, E_Na, E_k, E_l, g_Na, g_k, g_l, num_neurons=1):
@@ -70,7 +69,10 @@ class HH():
             beta = 0.125*np.exp(-1*(Vi*(10**3) + 65)/80)
         grad = alpha*(1-xi) - beta*xi
         return grad
-    
+
+'''  
+import matplotlib.pyplot as plt
+  
 C = 1*(10**-6)
 E_Na = 50*(10**-3)
 E_k = -77*(10**-3)
@@ -89,6 +91,7 @@ for t in range(n_t):
     if t<int(3*T//delta_t) and t>=int(2*T//delta_t):
         I[0,t] = 1
 I = I0*I
+'''
 
 '''
 # to find the initial values for steady state
@@ -127,6 +130,9 @@ print('solution n: {}'.format(get_alphabeta('n', sol)))
 # solution h: [0.60159082]
 # solution m: [0.05196212]
 # solution n: [0.31527801]
+'''
+
+
 '''
 V0 = -0.06515672*np.ones((1,1))
 h0 = 0.60159082*np.ones((1,1))
@@ -198,6 +204,4 @@ print('Enegry dissipated by k channles : ', discrete_integrate(P_k[0, :], delta_
 print('Enegry dissipated by l channles : ', discrete_integrate(P_l[0, :], delta_t))
 print('Enegry dissipated by capacitor : ', discrete_integrate(P_cv[0, :], delta_t))
 print('Total energy dissipated : ', discrete_integrate(P_Na[0, :], delta_t)+discrete_integrate(P_k[0, :], delta_t)+discrete_integrate(P_l[0, :], delta_t)+discrete_integrate(P_cv[0, :], delta_t))
-
-
-
+'''

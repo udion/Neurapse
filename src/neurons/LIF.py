@@ -1,6 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
-from CURRENTS import *
 
 class LIF():
     def __init__(self, C, gL, V_thresh, El, Rp, num_neurons=1):
@@ -68,6 +66,8 @@ class LIF():
         return V_i1
 '''
 usage :
+import matplotlib.pyplot as plt
+from CURRENTS import *
 
 C=300*(10**-12)
 gL=30*(10**-9)

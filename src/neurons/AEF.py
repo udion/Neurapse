@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
 
 class AEF():
     def __init__(self, C, gl, El, Vt, Delt, a, tw, b, Vr, num_neurons=1):
@@ -58,6 +57,8 @@ class AEF():
         
         return V_i1, U_i1
 
+'''
+import matplotlib.pyplot as plt
 
 ######## RS model ############
 C1 = 200*(10**-12)
@@ -89,6 +90,7 @@ a3 = 2*(10**-9)
 tw3 = 120*(10**-3)
 b3 = 100*(10**-12)
 Vr3 = -46*(10**-3)
+'''
 
 '''
 # to find the initial values for steady state
