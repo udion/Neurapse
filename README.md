@@ -3,7 +3,7 @@
 ## 3rd Gen Neural Networks
 Current Deep Learning methods (2nd Gen) set very impressive state of the art results, although the building blocks such as *convolutions etc* are biologically inspired *they still are not as efficient as computations happening at many biological neural networks*.
 
-Spiking Neural Networks (SNNs) is an attempt to simulate biological neural networks closely. Broadly the framework consists of **Spikes**, **Neurons**, **Synapses**, **Networks**. ***IBM*** launched ***TrueNorth*** chip in 2014, ***Intel*** announced ***Loihi*** in 2017 both are attempts to do neuromorphic computations efficiently on chip.
+Spiking Neural Networks (SNNs) are called 3rd Gen and they attempt to simulate biological neural networks closely. Broadly the framework consists of **Spikes**, **Neurons**, **Synapses**, **Networks**. ***IBM*** launched ***TrueNorth*** chip in 2014, ***Intel*** announced ***Loihi*** in 2017 both are attempts to do neuromorphic computations efficiently on chip.
 
 **Neurapse** is a package in python which implements some of the fundamental blocks of SNN and is written in a manner so that it can easily be extended and customized for simulation purposes.
 
