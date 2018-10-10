@@ -145,8 +145,8 @@ This shows that for the given configuration, post-synaptic neuron 1 spikes and o
 ***
 ### Dynamical Random network with plastic synapses (STDP)
 
-There are two classes, namely `DRN_Const` and `DRN_Plastic` for building a random network of neurons having *constant weight* synapses and *plastic* synapses respectively. As for the previous case, the fanout, initial weights and synaptic time delays have to be specified. Here, first `N_exci` neurons from a list [0, 1, 2, ..., N-1] (indices of neurons) are excitatory neurons and the remaining `N_inhi` are inhibitory neurons. The excitatory neurons can connect to any other neuron in the pool, while the inhibitory neurons synapse only to other excitatory neurons. Each neuron communicates
-to a  `connect_frac * N`  of unique neurons in the network. As an example, a random network with 20 neurons is shown below. Note, the red edges show inhibitory synapses and blue ones show excitatory synapses.
+There are two classes, namely `DRN_Const` and `DRN_Plastic` for building a random network of neurons having *constant weight* synapses and *plastic* synapses respectively. As for the previous case, the fanout, initial weights and synaptic time delays have to be specified. Here, first `N_exci`  neurons from a list [0, 1, 2, ..., N-1] (indices of neurons) are excitatory neurons and the remaining `N_inhi` are inhibitory neurons. The excitatory neurons can connect to any other neuron in the pool, while the inhibitory neurons synapse only to other excitatory neurons. Each neuron communicates
+to a  `connect_frac * N`  of unique neurons in the network. As an example, a random network with *N = 20* neurons and *N_exci = 16, N_inhi = 4* is shown below. Note, the red edges show inhibitory synapses and blue ones show excitatory synapses.
 
 ![](./neural_network.png) 
 
