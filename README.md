@@ -6,6 +6,13 @@ Current Deep Learning methods (2nd Gen) set very impressive state of the art res
 Spiking Neural Networks (SNNs) is an attempt to simulate biological networks closely. Broadly the framework consists of **Spikes**, **Neurons**, **Synapses**, **Networks**.
 **Neurapse** is a package in python which implements some of the fundamental blocks of SNN and is written in a manner so that it can easily be extended and customized.
 
+This project is motivated from the work of Intel and IBM in the domain of Spiking Neural Networks. Intel's recently launched ***Loihi*** chip uses asynchronous SNNs to implement adaptive self-modifying event-driven fine-grained parallel computations used to implement learning with high efficiency. 
+
+Biological neural networks have been studied vastly since the early 19th century. Several neuronal models have been proposed and used in simulations, showing close resemblance of biological neural networks. To study more about Biological neural networks, visit [Prof. Gerstner's course on Neuronal Dynamics](https://lcn.epfl.ch/~gerstner/NeuronalDynamics-MOOC1.html). This package is an introductory framework for getting started with computational neuroscience.
+
+***
+*(This project was started as a part of the course assignments in the course EE 746: Neuromorphic Engineering (Instructor: [Prof. Udayan Ganguly](https://www.ee.iitb.ac.in/wiki/faculty/udayan)) at the Indian Institute of Technology, Bombay.)*
+
 ## Supports
 - `Neurons` : Hodgkin Huxley (HH), Adaptive Exponential Integrate and Fire (AEF) , Leaky integrate and Fire (LIF), IZHIKEVICH
 - `Synapses`: Constant Synapse (No STDP), Plastic Synapses (2 kinds of STDP)
