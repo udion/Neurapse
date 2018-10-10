@@ -1,34 +1,65 @@
-# Neuromorphic-Computing
-Codes from scratch for the intro to neuromorphic computing
+# Neurapse
 
-# Background story
-**2nd Generation ANN** consists of neurons, which sum up the input signals and apply non-linear activation functions on them, then using backpropagation the weights of the link between neurons can be learnt. While this has worked very well so far, it is unlikely to capture the workings of a real biological neuron or the real neural network in human brains. **3rd Generation Neural Networks** try to mimic the biological neural networks better. To understand this new framework we can split it into 3 major components : **Neurons, Synapes, Networks**
+## 3rd Gen Neural Networks
+Current Deep Learning methods (2nd Gen) set very impressive state of the art results, although the building blocks such as *convolutions etc* are biologically inspired ***they still are not as efficient as computations happening at many biological neural networks***
 
-# Neurons
-Many different types of neuronal models are proposed, all of which try to capture the features of biological neurons. In this context, model is usually a set of ordinary differential equation(s) (it maybe a single ODE with constraints or coupled ODEs with constraints). Some of the famous yet simple models are:
+Spiking Neural Networks (SNNs) is an attempt to simulate biological networks closely. Broadly the framework consists of **Spikes**, **Neurons**, **Synapses**, **Networks**.
+**Neurapse** is a package in python which implements some of the fundamental blocks of SNN and is written in a manner so that it can easily be extended and customized.
 
-* **Hodgkin-Huxley (HH)**
+* Neurons : Hodgkin Huxley (HH), Adaptive Exponential Fire (AEF) , Leaky integrate and Fire (LIF), IZHIKEVICH
 
-    This was designed by studying neurons from giant squid. It's a set of coupled differential equation which mimics the variation in conducatance of different ion-channels in the neurons well (which are essential for spike generation. ***Oh yes, 3rd generation networks feed on spikes, that is, token of information here is spike in membrane potential of the neurons. Information/signal is passed from one neuron to another in terms of spikes***). find out more about the theory here.
+* Synapses: Constant Synapse (No STDP), Plastic Synapses (2 kinds of STDP)
 
-    ![](./media/neurons/problem4_1.png)
-    ![](./media/neurons/problem4_2.png)
-    ![](./media/neurons/problem4_3.png)
+* Networks: Feed Forward using LIF, Dynamic Random Networks
 
-Although HH models seems to capture many things very well, for practial use cases it's not scalable as it has many coupled equations at play. In order to reduce the complexity (and hence computational time/cost) several alternate models were proposed. These are less complicated than HH, but they come at the cost that, there needs to be a manual check condition which ensures resetting of potentials and latent variables once the hit a require threshold (these things were taken care of in the equations itself in HH model). Some more models in reverse order of complexities:
+## How to use?
+clone or fork this repository by `git clone https://github.com/udion/Neurapse`. Make sure you have the dependencies given in the `requirements.txt` (*So far it only requires numpy, matplotlib*)
 
-* **Adaptive Exponential Integrate (AEF)**
-    ![](./media/neurons/problem3_1.png)
-    ![](./media/neurons/problem3_2.png)
-    ![](./media/neurons/problem3_3.png)
+Some examples are given with the comments in `examples*.py`. 
 
-* **IZHIKEVICH**
-    ![](./media/neurons/problem2_1.png)
-    ![](./media/neurons/problem2_2.png)
-    ![](./media/neurons/problem2_3.png)
+### Importing a neuron
+```python
+import numpy as np
+import matplotlib.pyplot as plt
 
-* **Leaky Integrate and Fire (LIF)**
-    ![](./media/neurons/problem1_1.png)
+import Neurapse.Neurons as HH #importing Hodgkin-Huxley neuron
+import Neurapse.utils.CURRENTS as Cur #to generate currents (Square pulse in this example)
+```
+
+Neurons in SNN frameworks are described using certain parameters such as *Capacitance, Resting potentials, Time constants **etc***
+
+Hodgkin-Huxley neuron in particular has the following parameters :
+```python
+C = 1e-6
+E_Na = 50e-3
+E_k = -77e-3
+E_l = -55e-3
+g_Na = 120e-3
+g_k = 36e-3
+g_l = 0.3e-3
+I0 = 15e-6
+
+T = 30e-3 # Time in seconds
+delta_t = 1e-5 # quanta in which time updates in seconds
+n_t = int(5*T//delta_t)+1 # Total time of simulation is 5*T, hence number of time-steps is n_t
+```
+Let's generate the input current and visualise it
+```python
+Sq1 = Cur.SQUARE_PULSE(t_start=6000, t_end=9000, T=n_t)
+I = Sq1.generate() # normalised current i.e maximum amplitude is 1 unit, of shape [1 X T]
+I = I0*I # I is input current to the neuron in micro-Ampere 
+
+plt.plot(I)
+plt.xlabel('time')
+plt.ylabel('current')
+```
+
+
+
+
+
+
+
 
 
 
