@@ -93,6 +93,30 @@ We can similarly use other neurons (*HH models the ion channel currents very wel
 
 ## Importing a Network
 
+### Fully connected Network with constant weight Synapse (No STDP)
+`NNetwork_Const` class uses `LIF` neurons to build a fully connected SNN as shown in the diagram. To do so one has to specify the fanout, initial weights, synaptic time delay
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+import Neurapse.utils.CURRENTS as Cur
+from Neurapse.Networks import NNetwork_Const
+
+Fanout = [[0,1],[0,1],[0,1]]
+W = [[3000,3000],[3000,3000],[3000,3000]]
+Tau = [[1e-3,8e-3],[5e-3,5e-3],[9e-3,1e-3]]  
+
+Net = NNetwork_Const(Fanout, W, Tau, 3, 2) #defines the network
+```
+Since there are 3 input neurons we will make Input currents of shape `[3 X n_t]` and pass it to the network
+```python
+
+```
+
+
+
+
+
 
 
 
