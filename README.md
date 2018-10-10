@@ -161,6 +161,10 @@ The raster plot for a dynamic random network (*N = 500, T = 2000 ms*) changing t
 * `Networks.py` shows how to put together neurons and Synapses to build a network
 * `utils` has various functions to generate currents/spikes etc
 
+## Authors
+* @suyash67
+* @udion
+
 ***Feel free to submit pull requests***
 
 
