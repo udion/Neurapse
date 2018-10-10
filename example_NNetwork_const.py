@@ -17,3 +17,12 @@ I_pre = np.array([
 
 print(I_pre.shape)
 V_pre_response, V_post_response, I_sy_list, I_post = Net.compute(I_pre, 1e-4)
+
+for i in range(2):
+    plt.plot(V_post_response[i,:], label='post-{}'.format(i))
+plt.legend()
+plt.xlabel('time')
+plt.ylabel('V')
+plt.title('response of the post neurons')
+plt.tight_layout()
+plt.show()

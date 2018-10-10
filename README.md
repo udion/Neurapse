@@ -117,8 +117,26 @@ Net = NNetwork_Const(Fanout, W, Tau, 3, 2) #defines the network
 ```
 Since there are 3 input neurons we will make Input currents of shape `[3 X n_t]` and pass it to the network
 ```python
+I_pre = np.array([
+    50e-9*Cur.SQUARE_PULSE(0, 10, 10000).generate(),
+    50e-9*Cur.SQUARE_PULSE(40, 50, 10000).generate(),
+    50e-9*Cur.SQUARE_PULSE(80, 90, 10000).generate(),
+]).reshape(3,-1)
 
+print(I_pre.shape)
+V_pre_response, V_post_response, I_sy_list, I_post = Net.compute(I_pre, 1e-4)
 ```
+Now we can see the response of the **2 post synaptic neurons**
+```python
+ for i in range(2):
+    plt.plot(V_post_response[i,:], label='post-{}'.format(i))
+plt.legend()
+plt.xlabel('time')
+plt.ylabel('V')
+plt.title('response of the post neurons')
+```
+This shows that for the given configuration, post-synaptic neuron 1 spikes and other does not spike, hence this configuration is suitable for identifying the given input pattern
+![](./Neurapse_fullN1.png)
 
 
 
