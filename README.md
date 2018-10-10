@@ -137,14 +137,11 @@ plt.title('response of the post neurons')
 This shows that for the given configuration, post-synaptic neuron 1 spikes and other does not spike, hence this configuration is suitable for identifying the given input pattern
 ![](media/Neurapse_fullN1.png)
 
-
-
-
-
 ***
 ### Dynamical Random network with plastic synapses (STDP)
 
-`example_DRN.py` shows how to use the DRN classes
+`example_DRN.py` shows how to use the DRN classes.
+To read more about the dynamic random classes refer to [Polychronization: Computation with Spikes](https://www.izhikevich.org/publications/spnet.pdf)
 
 There are two classes, namely `DRN_Const` and `DRN_Plastic` for building a random network of neurons having *constant weight* synapses and *plastic* synapses respectively. As for the previous case, the fanout, initial weights and synaptic time delays have to be specified. Here, first `N_exci` neurons from a list [0, 1, 2, ..., N-1] (indices of neurons) are excitatory neurons and the remaining `N_inhi` are inhibitory neurons. The excitatory neurons can connect to any other neuron in the pool, while the inhibitory neurons synapse only to other excitatory neurons. Each neuron communicates
 to a  `connect_frac * N`  of unique neurons in the network. As an example, a random network with 20 neurons is shown below. Note, the red edges show inhibitory synapses and blue ones show excitatory synapses.
@@ -164,7 +161,7 @@ The raster plot for a dynamic random network (*N = 500, T = 2000 ms*) changing t
 * `Networks.py` shows how to put together neurons and Synapses to build a network
 * `utils` has various functions to generate currents/spikes etc
 
-Feel free to submit pull requests
+***Feel free to submit pull requests***
 
 
 
