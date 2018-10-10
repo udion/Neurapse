@@ -60,6 +60,27 @@ plt.show() #graph shown below
 
 Let's pass this current to the `Neuron (hodgkin-huxley defined above)`. *Neurons have a `.compute()` function which will give the response of the neuron, given intial condition and input current*
 
+```python
+# initial conditions of neurons will be of shape [num_neuron X 1], in this case num neurons
+# These are the initial conditions of Hodgkin-Huxley, checkout the reading material
+# to figure out how to get these, for now enjoy the ride :P
+V0 = -0.06515672*np.ones((1,1))
+h0 = 0.60159082*np.ones((1,1))
+m0 = 0.05196212*np.ones((1,1))
+n0 = 0.31527801*np.ones((1,1))
+
+# response of the HH neuron
+# V is the membrane potential, m/h/n are the current parameters of HH
+V, h, m, n = Neuron.compute(V0, h0, m0, n0, I, delta_t)
+
+# we can get Sodium/Pottasium channel currents using h,m,n
+i_Na = g_Na*(m**3)*h*(V-E_Na)
+i_k = g_k*(n**4)*(V-E_k)
+i_l = g_l*(V-E_l)
+```
+We can visualise the responses, say `V, i_Na (Sodium channel current), i_k(potassium channel current), leaky current`
+![](./neurapse_HHresponse.png)
+
 
 
 
