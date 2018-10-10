@@ -82,8 +82,9 @@ We can visualise the responses, say `V, i_Na (Sodium channel current), i_k(potas
 ![](./neurapse_HHresponse.png)
 
 We can similarly use other neurons (*HH models the ion channel currents very well, but is expensive in computation due to coupled differential equations of channel currents*). **Adaptive Exponential Integrate and Fire (AEF)** neuron is one such model which is not as complex as **HH** but by tweaking the parameters one can get different behaviour of the neurons. `exampleAEF.py` shows how to use AEF neuron
+
 IB             |  CH             | RH
-:-------------------------:|:-------------:|:------------:
+:-------------:|:---------------:|:------------:
 ![](./AEF_IB.png)  |  ![](./AEF_CH.png) | ![](./AEF_RH.png)
 
 
